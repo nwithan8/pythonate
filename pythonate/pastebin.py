@@ -9,6 +9,8 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
 
+import pythonate.logs as logs
+
 # Pastebin #
 pastebin_expiration_options = ["5min", "10min", "1hour", "1day", "1week", "1month", "1year", "never"]
 
@@ -172,22 +174,24 @@ def _privatebin_send(paste_url,
     try:
         result = r.json()
     except:
-        return False, 'Error parsing JSON: {}'.format(r.text)
+        return False, f'Error parsing JSON: {r.text}'
 
     paste_status = result['status']
     if paste_status:
         paste_message = result['message']
-        return False, "Error getting status: {}".format(paste_message)
+        return False, f"Error getting status: {paste_message}"
 
     paste_id = result['id']
     paste_url_id = result['url']
     paste_deletetoken = result['deletetoken']
 
-    return {'url': '{}{}#{}'.format(paste_url, paste_url_id, _base58_encode(paste_passphrase).decode("utf-8")),
-            'delete': '{}/?pasteid={}&deletetoken={}'.format(paste_url, paste_id, paste_deletetoken)}, None
+    return {'url': f'{paste_url}{paste_url_id}#{_base58_encode(paste_passphrase).decode("utf-8")}',
+            'delete': f'{paste_url}/?pasteid={paste_id}&deletetoken={paste_deletetoken}'}, None
 
 
-def privatebin(text, url: str = 'https://privatebin.net', pass_protect=False, expiration='never',
+def privatebin(text,
+               url: str = 'https://privatebin.net',
+               pass_protect=False, expiration='never',
                burn_after_reading=False):
     paste_url = url
     paste_formatter = 'plaintext'
@@ -199,7 +203,7 @@ def privatebin(text, url: str = 'https://privatebin.net', pass_protect=False, ex
     paste_attachment = None
 
     if not text:
-        return False, "You did not provide any text to send to {}".format(url)
+        return False, f"You did not provide any text to send to {url}"
 
     if expiration not in pastebin_expiration_options:
         return False, "Incorrect how_long option. Options: '{}'".format("', '".join(pastebin_expiration_options))
@@ -222,10 +226,12 @@ def privatebin(text, url: str = 'https://privatebin.net', pass_protect=False, ex
                             expiration)
 
 
-def hastebin(text, url: str = 'https://hastebin.com'):
+def hastebin(text,
+             url: str = 'https://hastebin.com'):
     try:
-        post = requests.post('{}/documents'.format(url), data=text.encode('utf-8'))
-        data = {'url': '{}/{}'.format(url, post.json()['key'])}
-        return data, None
+        post = requests.post(f'{url}/documents', data=text.encode('utf-8'))
+        data = {'url': f'{url}/{post.json()["key"]}'}
+        return data
     except Exception as e:
-        return None, e
+        logs.log(message=str(e), level='error')
+    return None

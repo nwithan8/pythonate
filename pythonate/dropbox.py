@@ -1,6 +1,7 @@
 import ntpath
 
 from dropbox import dropbox as dbx
+import pythonate.logs as logs
 
 
 # Dropbox #
@@ -13,7 +14,7 @@ class Dropbox:
             if toWhere:
                 self.db.files_download_to_file(f'/{filePath}', toWhere)
             else:
-                self.db.files_download('/{}'.format(filePath))
+                self.db.files_download(f'/{filePath}')
             return True
         except FileNotFoundError:
             pass
@@ -22,6 +23,7 @@ class Dropbox:
     def upload_file(self, filePath, rename=False) -> bool:
         try:
             with open(filePath, 'rb') as f:
+                logs.log(message=f"Uploading {filePath} to Dropbox...")
                 if not rename:
                     filename = ntpath.basename(filePath)
                 self.db.files_upload(f.read(), f'/{(rename if rename else filename)}',
