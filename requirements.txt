@@ -3,5 +3,4 @@ cryptography
 dropbox
 pysqlcipher3
 pyodbc
-sqlite3
 mysql-connector-python
