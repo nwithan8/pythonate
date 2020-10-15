@@ -22,7 +22,6 @@ class Dropbox:
     def upload_file(self, filePath, rename=False) -> bool:
         try:
             with open(filePath, 'rb') as f:
-                print("Uploading {} to Dropbox...".format(filePath))
                 if not rename:
                     filename = ntpath.basename(filePath)
                 self.db.files_upload(f.read(), f'/{(rename if rename else filename)}',

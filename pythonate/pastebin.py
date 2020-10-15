@@ -90,8 +90,6 @@ def _privatebin_encrypt(paste_passphrase,
     if paste_attachment_name and paste_attachment:
         paste_data['attachment'] = paste_attachment
         paste_data['attachment_name'] = paste_attachment_name
-        print(paste_attachment_name)
-        print(paste_attachment)
 
     if paste_compress:
         zobj = zlib.compressobj(wbits=-zlib.MAX_WBITS)
@@ -230,5 +228,4 @@ def hastebin(text, url: str = 'https://hastebin.com'):
         data = {'url': '{}/{}'.format(url, post.json()['key'])}
         return data, None
     except Exception as e:
-        print(e)
         return None, e
