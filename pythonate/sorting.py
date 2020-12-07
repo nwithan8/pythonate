@@ -61,7 +61,7 @@ def remove_duplicates_by_attribute(items: List, attribute_name: str) -> List:
     return filtered
 
 
-def _separate_with_and_without(items: List, attribute_name: str) -> Tuple[List, List]:
+def separate_with_and_without(items: List, attribute_name: str) -> Tuple[List, List]:
     """
     Split a list of items into those with a specific attribute and those without
     :param items: List of items

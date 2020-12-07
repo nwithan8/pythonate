@@ -25,7 +25,7 @@ class GoogleAnalytics:
         if self.do_not_track:
             return True
         url = _make_GA_url(params_dict=final_params)
-        if requests.http_post(url=url):
+        if requests.post(url=url):
             return True
         return False
 

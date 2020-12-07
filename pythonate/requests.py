@@ -6,7 +6,7 @@ import pythonate.logs as logging
 
 
 # HTTP Requests #
-def http_get(url: str,
+def get(url: str,
              params: dict = None,
              headers: dict = None,
              timeout: int = 2,
@@ -23,7 +23,7 @@ def http_get(url: str,
         return None
 
 
-def http_post(url: str,
+def post(url: str,
               params: dict = None,
               headers: dict = None,
               data: dict = None,
@@ -42,7 +42,7 @@ def http_post(url: str,
         return None
 
 
-def http_put(url: str,
+def put(url: str,
              params: dict = None,
              headers: dict = None,
              data: dict = None,
@@ -61,7 +61,7 @@ def http_put(url: str,
         return None
 
 
-def http_delete(url: str,
+def delete(url: str,
                 params: dict = None,
                 headers: dict = None,
                 data: dict = None,
