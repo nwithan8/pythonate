@@ -1,7 +1,7 @@
 import sqlite3
 from pysqlcipher3 import dbapi2 as sqlcipher
 import mysql.connector
-import pyodbc
+# import pyodbc
 
 
 # SQL Functions #
@@ -56,12 +56,14 @@ class SQL:
         elif self.SQL_TYPE == 'MySQL':
             db = mysql.connector.connect(user=self.USERNAME, password=self.PASSWORD, host=self.SERVER_IP,
                                          database=self.DATABASE_NAME)
+        """
         elif self.SQL_TYPE == 'MSSQL':
             db = pyodbc.connect(f'DRIVER={{/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.5.so.2.1}};'
                                 f'SERVER={self.SERVER_IP};'
                                 f'DATABASE={self.DATABASE_NAME};'
                                 f'UID={self.USERNAME};'
                                 f'PWD={self.PASSWORD}')
+        """
         return db
 
     def use_sql_locally(self):
