@@ -4,6 +4,9 @@ import pythonate._version
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+with open("requirements.txt", 'r') as fh:
+    requirements = fh.read().splitlines()
+
 setuptools.setup(
     # How you named your package folder (MyLib)
     name='pythonate',
@@ -21,8 +24,8 @@ setuptools.setup(
     # Type in your E-Mail
     author_email='n8gr8gbln@gmail.com',
     # Provide either the link to your github or to your website
-    url='https://github.com/nwithan8/pythonate',
-    download_url=f'https://github.com/nwithan8/dizqueTV-python/archive/{pythonate._version.__version__}.tar.gz',
+    url=f'https://github.com/nwithan8/{pythonate.__package__}',
+    download_url=f'https://github.com/nwithan8/{pythonate.__package__}/archive/{pythonate._version.__version__}.tar.gz',
     # Keywords that define your package best
     keywords=[
         'Python',
@@ -32,17 +35,17 @@ setuptools.setup(
         'Dropbox',
         'helper',
         'Google Analytics',
-        'sorting'
+        'sorting',
+        'unit conversion',
+        'imperial',
+        'metric',
+        'storage',
+        'temperature',
+        'enum',
+        'random',
+        'uuid'
     ],
-    install_requires=[
-        'requests',
-        'cryptography',
-        'dropbox',
-        'pysqlcipher3',
-        'pyodbc',
-        'sqlite3',
-        'mysql-connector-python'
-    ],
+    install_requires=requirements,
     classifiers=[
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
@@ -52,7 +55,6 @@ setuptools.setup(
         'Topic :: Software Development :: Build Tools',
         # Specify which python versions that you want to support
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
@@ -61,5 +63,5 @@ setuptools.setup(
         'Topic :: Internet :: WWW/HTTP',
         'Operating System :: OS Independent'
     ],
-    python_requires='>=3.6'
+    python_requires='>=3.7'
 )
