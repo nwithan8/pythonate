@@ -8,7 +8,7 @@ setuptools.setup(
     # How you named your package folder (MyLib)
     name='pythonate',
     # Chose the same as "name"
-    packages=['pythonate'],
+    packages=setuptools.find_packages(),
     # Start with a small number and increase it with every change you make
     version=pythonate._version.__version__,
     license='GNU General Public License v3 (GPLv3)',
