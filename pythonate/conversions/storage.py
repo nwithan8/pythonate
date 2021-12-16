@@ -10,7 +10,7 @@ class Unit(Enum):
     PETABYTES = ('PB', 5, 1024 ** 6)
     EXABYTES = ('EB', 6, 1024 ** 7)
     ZETTABYTES = ('ZB', 7, 1024 ** 8)
-    YOTTABYTES = ('YB', 8, None)
+    YOTTABYTES = ('YB', 8, 1024 ** 9)
 
 
 def _to_bytes(size: float, units: Unit):
@@ -34,22 +34,22 @@ def simplify(size: float, units: Unit):
 
     if size_in_bytes < Unit.BYTES.value[2]:
         return Storage(size_in_bytes, Unit.BYTES)
+    elif size_in_bytes < Unit.KILOBYTES.value[2]:
+        return Storage(size_in_bytes / Unit.BYTES.value[2], Unit.KILOBYTES)
     elif size_in_bytes < Unit.MEGABYTES.value[2]:
-        return Storage(size_in_bytes / Unit.KILOBYTES.value[2], Unit.KILOBYTES)
+        return Storage(size_in_bytes / Unit.KILOBYTES.value[2], Unit.MEGABYTES)
     elif size_in_bytes < Unit.GIGABYTES.value[2]:
-        return Storage(size_in_bytes / Unit.MEGABYTES.value[2], Unit.MEGABYTES)
+        return Storage(size_in_bytes / Unit.MEGABYTES.value[2], Unit.GIGABYTES)
     elif size_in_bytes < Unit.TERABYTES.value[2]:
-        return Storage(size_in_bytes / Unit.GIGABYTES.value[2], Unit.GIGABYTES)
+        return Storage(size_in_bytes / Unit.GIGABYTES.value[2], Unit.TERABYTES)
     elif size_in_bytes < Unit.PETABYTES.value[2]:
-        return Storage(size_in_bytes / Unit.TERABYTES.value[2], Unit.TERABYTES)
+        return Storage(size_in_bytes / Unit.TERABYTES.value[2], Unit.PETABYTES)
     elif size_in_bytes < Unit.EXABYTES.value[2]:
-        return Storage(size_in_bytes / Unit.PETABYTES.value[2], Unit.PETABYTES)
+        return Storage(size_in_bytes / Unit.PETABYTES.value[2], Unit.EXABYTES)
     elif size_in_bytes < Unit.ZETTABYTES.value[2]:
-        return Storage(size_in_bytes / Unit.EXABYTES.value[2], Unit.EXABYTES)
-    elif size_in_bytes < Unit.YOTTABYTES.value[2]:
-        return Storage(size_in_bytes / Unit.ZETTABYTES.value[2], Unit.ZETTABYTES)
+        return Storage(size_in_bytes / Unit.EXABYTES.value[2], Unit.ZETTABYTES)
     else:
-        return Storage(B / Unit.YOTTABYTES.value[2], Unit.YOTTABYTES)
+        return Storage(size_in_bytes / Unit.ZETTABYTES.value[2], Unit.YOTTABYTES)
 
 
 def to_other_unit(size: float, current_units: Unit, target_units: Unit):
