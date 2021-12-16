@@ -6,7 +6,7 @@ from pythonate.enums import make_enums
 from pythonate.files import FileMode, copy_file, backup_file, read_from_file, write_to_file, split_file_path, make_path
 from pythonate.json import load_json_from_file, load_json_from_sqlite, save_json_to_file, save_json_to_sqlite
 from pythonate.logs import LogLevel, log, init_logging
-from pythonate.objects import pickle_to_object, pickle_file_to_object, object_to_pickle, object_to_pickle_file
+from pythonate.objects import pickle_to_object, pickle_file_to_object, object_to_pickle, object_to_pickle_file, save_object_to_sqlite, load_object_from_sqlite
 from pythonate.random import random, random_with_attributes
 from pythonate.security import *
 from pythonate.sorting import shuffle, separate_with_and_without, remove_duplicates_by_attribute, rotate_items, \
