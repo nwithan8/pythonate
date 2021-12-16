@@ -1,7 +1,13 @@
 import logging
 
 # Logging #
+from enum import Enum
+
 need_to_config_logs = True
+
+
+def _critical(message):
+    logging.critical(msg=message)
 
 
 def _info(message):
@@ -16,24 +22,28 @@ def _warning(message):
     logging.warning(msg=message)
 
 
-level_map = {
-    'info': _info,
-    'error': _error,
-    'warning': _warning
-}
+def _debug(message):
+    logging.debug(msg=message)
 
 
-def log(message: str, level: str = "info") -> None:
+class LogLevel(Enum):
+    CRITICAL = _critical
+    FATAL = _critical
+    ERROR = _error
+    WARNING = _warning
+    INFO = _info
+    DEBUG = _debug
+
+
+def log(message: str, level: LogLevel = LogLevel.INFO) -> None:
     """
     Log a message if verbose is enabled.
     :param message: Message to log
-    :param level: info, error or warning
+    :param level: debug, info, warning, error or critical
     """
     if need_to_config_logs:
         init_logging()
-    if level not in level_map.keys():
-        level = 'info'
-    level_map[level](message)
+    level.value(message)
 
 
 def init_logging(message_format: str = '%(asctime)s %(levelname)s:%(message)s',

@@ -2,17 +2,26 @@ import base64
 import json
 import os
 import zlib
+from enum import Enum
 
 import requests
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 import pythonate.logs as logs
 
-# Pastebin #
-pastebin_expiration_options = ["5min", "10min", "1hour", "1day", "1week", "1month", "1year", "never"]
+
+class PrivatebinExpiration(Enum):
+    FIVE_MINUTES = "5min",
+    TEN_MINUTES = "10min",
+    ONE_HOUR = "1hour",
+    ONE_DAY = "1day",
+    ONE_WEEK = "1week",
+    ONE_MONTH = "1month",
+    ONE_YEAR = "1year"
+    NEVER = "never"
 
 
 def _json_encode(d):
@@ -137,8 +146,8 @@ def _privatebin_send(paste_url,
                      paste_attachment,
                      paste_compress,
                      paste_burn,
-                     paste_opendicussion,
-                     paste_expire):
+                     paste_opendiscussion,
+                     paste_expire: PrivatebinExpiration):
     paste_passphrase = bytes(os.urandom(32))
     # paste_passphrase = get_random_bytes(32)
 
@@ -150,7 +159,7 @@ def _privatebin_send(paste_url,
                                                         paste_attachment,
                                                         paste_compress,
                                                         paste_burn,
-                                                        paste_opendicussion)
+                                                        paste_opendiscussion)
 
     # json payload for the post API
     # https://github.com/PrivateBin/PrivateBin/wiki/API
@@ -159,7 +168,7 @@ def _privatebin_send(paste_url,
         "adata": paste_adata,
         "ct": paste_ciphertext,
         "meta": {
-            "expire": paste_expire,
+            "expire": paste_expire.value,
         }
     }
 
@@ -191,12 +200,13 @@ def _privatebin_send(paste_url,
 
 def privatebin(text,
                url: str = 'https://privatebin.net',
-               pass_protect=False, expiration='never',
+               pass_protect=False,
+               expiration: PrivatebinExpiration = PrivatebinExpiration.NEVER,
                burn_after_reading=False):
     paste_url = url
     paste_formatter = 'plaintext'
     paste_compress = True
-    paste_opendicussion = 0
+    paste_opendiscussion = 0
     paste_burn = 0
     paste_password = None
     paste_attachment_name = None
@@ -204,9 +214,6 @@ def privatebin(text,
 
     if not text:
         return False, f"You did not provide any text to send to {url}"
-
-    if expiration not in pastebin_expiration_options:
-        return False, "Incorrect how_long option. Options: '{}'".format("', '".join(pastebin_expiration_options))
 
     if burn_after_reading:
         paste_burn = 1
@@ -222,7 +229,7 @@ def privatebin(text,
                             paste_attachment,
                             paste_compress,
                             paste_burn,
-                            paste_opendicussion,
+                            paste_opendiscussion,
                             expiration)
 
 
@@ -233,5 +240,5 @@ def hastebin(text,
         data = {'url': f'{url}/{post.json()["key"]}'}
         return data
     except Exception as e:
-        logs.log(message=str(e), level='error')
+        logs.log(message=str(e), level=logs.LogLevel.ERROR)
     return None

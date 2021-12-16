@@ -1,8 +1,7 @@
 from datetime import datetime
-from typing import Union, Tuple, List
+from typing import Union
 
 
-# Time Functions #
 def remove_time_from_date(date_string: Union[datetime, str]) -> str:
     """
     Remove time, i.e. 00:00:00, from a datetime.datetime or string

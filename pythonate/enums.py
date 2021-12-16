@@ -1,5 +1,2 @@
-from enum import Enum
-
-
-def enum(**enums):
-    return type('Enum', (), enums)
+def make_enums(name: str, **enums):
+    return type(name, (), enums)

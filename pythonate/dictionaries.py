@@ -1,8 +1,9 @@
 import json
-from typing import List, Union, Tuple
+from typing import List
+
+import sqlitedict
 
 
-# Dictionaries #
 def dict_to_json(dictionary: dict) -> json:
     """
     Convert a dictionary to valid JSON
@@ -10,6 +11,66 @@ def dict_to_json(dictionary: dict) -> json:
     :return: JSON representation of dictionary
     """
     return json.dumps(dictionary)
+
+
+def json_to_dict(json_string: str) -> dict:
+    """
+    Convert a JSON string to a dictionary
+    :param json_string: JSON string to convert
+    :return: Dictionary representation of JSON string
+    """
+    return json.loads(json_string)
+
+
+def load_dict_from_file(file_path: str) -> dict:
+    """
+    Load a dictionary from a JSON file
+    :param file_path: Path to JSON file
+    :return: Dictionary
+    """
+    with open(file_path, 'r') as f:
+        return json.load(f)
+
+
+def save_dict_to_file(dictionary: dict, file_path: str) -> None:
+    """
+    Save a dictionary to a JSON file
+    :param dictionary: Dictionary to save
+    :param file_path: Path to file
+    :return: None
+    """
+    with open(file_path, 'w') as f:
+        json.dump(dictionary, f)
+
+
+def load_dict_from_sqlite(file_path: str) -> dict:
+    """
+    Load a dictionary from a SQLite database
+    :param file_path: Path to file
+    :return: Dictionary
+    """
+    data = {}
+    with sqlitedict.SqliteDict(file_path, autocommit=True) as db:
+        # copy the data from the sqlite database to the dictionary
+        for k, v in db.items():
+            data[k] = v
+        db.close()
+    return data
+
+
+def save_dict_to_sqlite(dictionary: dict, file_path: str) -> None:
+    """
+    Save a dictionary to a SQLite database
+    :param dictionary: Dictionary to save
+    :param file_path: Path to file
+    :return: None
+    """
+    with sqlitedict.SqliteDict(file_path) as db:
+        # copy the data from the dictionary to the sqlite database
+        for k, v in dictionary.items():
+            db[k] = v
+        db.commit()
+        db.close()
 
 
 def combine_dictionaries(old_dictionary: dict, new_dictionary: dict, add_new_items: bool = False) -> dict:

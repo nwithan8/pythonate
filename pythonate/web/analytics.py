@@ -1,11 +1,10 @@
 from urllib.parse import urlencode
 
-import pythonate.general as general
-import pythonate.requests as requests
+import pythonate.uuid as general
+import pythonate.web.requests as requests
 
 
-# Google Analytics #
-def _make_GA_url(params_dict):
+def _make_google_analytics_url(params_dict):
     base_url = "https://www.google-analytics.com/collect"
     args = urlencode(params_dict)
     return f"{base_url}?{args}"
@@ -24,7 +23,7 @@ class GoogleAnalytics:
     def _send(self, final_params):
         if self.do_not_track:
             return True
-        url = _make_GA_url(params_dict=final_params)
+        url = _make_google_analytics_url(params_dict=final_params)
         if requests.post(url=url):
             return True
         return False
@@ -52,12 +51,12 @@ class GoogleAnalytics:
             final_params['ev'] = event_value
         return self._send(final_params=final_params)
 
-    def pageview(self,
-                 visited_page: str,
-                 page_title: str = None,
-                 user_id: str = None,
-                 anonymize_ip: bool = False,
-                 random_uuid_if_needed: bool = False):
+    def page_view(self,
+                  visited_page: str,
+                  page_title: str = None,
+                  user_id: str = None,
+                  anonymize_ip: bool = False,
+                  random_uuid_if_needed: bool = False):
         if self.do_not_track:
             return True
         if not user_id:

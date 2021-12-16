@@ -1,12 +1,10 @@
-from pythonate.enums import enum
-
-temperature_units = enum(FAHRENHEIT='F', CELSIUS='C', KELVIN='K')
+from enum import Enum
 
 
-class Units:
-    FAHRENHEIT = temperature_units.FAHRENHEIT
-    CELSIUS = temperature_units.CELSIUS
-    KELVIN = temperature_units.KELVIN
+class Unit(Enum):
+    CELSIUS = 'C'
+    FAHRENHEIT = 'F'
+    KELVIN = 'K'
 
 
 def f_to_c(f: float):
@@ -36,12 +34,12 @@ def k_to_f(k: float):
 
 
 class Temperature:
-    def __init__(self, temperature: float, units: temperature_units):
+    def __init__(self, temperature: float, units: Unit):
         self._temp = temperature
         self._units = units
 
     def __str__(self):
-        return f"{self._temp}{'' if self._units == temperature_units.KELVIN else '°'}{self._units}"
+        return f"{self._temp}{'' if self._units == Unit.KELVIN else '°'}{self._units}"
 
     def __int__(self):
         return int(self._temp)
@@ -51,27 +49,27 @@ class Temperature:
 
     @property
     def fahrenheit(self):
-        if self._units == temperature_units.CELSIUS:
-            return Temperature(c_to_f(c=self._temp), temperature_units.FAHRENHEIT)
-        if self._units == temperature_units.KELVIN:
-            return Temperature(k_to_f(k=self._temp), temperature_units.FAHRENHEIT)
-        if self._units == temperature_units.FAHRENHEIT:
+        if self._units == Unit.CELSIUS:
+            return Temperature(c_to_f(c=self._temp), Unit.FAHRENHEIT)
+        if self._units == Unit.KELVIN:
+            return Temperature(k_to_f(k=self._temp), Unit.FAHRENHEIT)
+        if self._units == Unit.FAHRENHEIT:
             return self
 
     @property
     def celsius(self):
-        if self._units == temperature_units.CELSIUS:
+        if self._units == Unit.CELSIUS:
             return self
-        if self._units == temperature_units.KELVIN:
-            return Temperature(k_to_c(k=self._temp), temperature_units.CELSIUS)
-        if self._units == temperature_units.FAHRENHEIT:
-            return Temperature(f_to_c(f=self._temp), temperature_units.CELSIUS)
+        if self._units == Unit.KELVIN:
+            return Temperature(k_to_c(k=self._temp), Unit.CELSIUS)
+        if self._units == Unit.FAHRENHEIT:
+            return Temperature(f_to_c(f=self._temp), Unit.CELSIUS)
 
     @property
     def kelvin(self):
-        if self._units == temperature_units.CELSIUS:
-            return Temperature(c_to_k(c=self._temp), temperature_units.KELVIN)
-        if self._units == temperature_units.KELVIN:
+        if self._units == Unit.CELSIUS:
+            return Temperature(c_to_k(c=self._temp), Unit.KELVIN)
+        if self._units == Unit.KELVIN:
             return self
-        if self._units == temperature_units.FAHRENHEIT:
-            return Temperature(f_to_k(f=self._temp), temperature_units.KELVIN)
+        if self._units == Unit.FAHRENHEIT:
+            return Temperature(f_to_k(f=self._temp), Unit.KELVIN)

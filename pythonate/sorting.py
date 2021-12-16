@@ -1,11 +1,10 @@
 import collections
 import random
-from typing import List, Union, Tuple
+from typing import List, Tuple
 
-import pythonate.general as general
+from pythonate.checks import object_has_attribute
 
 
-# Sorting #
 def shuffle(items: List) -> bool:
     """
     Randomize the order of the items in a list in-place
@@ -71,7 +70,7 @@ def separate_with_and_without(items: List, attribute_name: str) -> Tuple[List, L
     items_with = []
     items_without = []
     for item in items:
-        if general.object_has_attribute(obj=item, attribute_name=attribute_name):
+        if object_has_attribute(obj=item, attribute_name=attribute_name):
             items_with.append(item)
         else:
             items_without.append(item)

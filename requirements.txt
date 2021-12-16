@@ -1,6 +1,6 @@
-requests
-cryptography
-dropbox
-pysqlcipher3
-pyodbc
-mysql-connector-python
+requests~=2.26.0
+cryptography~=36.0.1
+sqlitedict~=1.7.0
+pyodbc~=4.0.32
+mysql-connector-python~=8.0.27
+objectrest~=0.3.1

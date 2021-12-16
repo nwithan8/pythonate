@@ -1,10 +1,9 @@
 import random
-from typing import List, Union, Tuple
+from typing import List, Union
 
-import pythonate.general as general
+from pythonate.checks import object_has_attribute
 
 
-# Random #
 def random_choice(items: List):
     """
     Get a random item from a list
@@ -27,6 +26,6 @@ def random_with_attributes(items: List, attributes: List[str], attempts: int = 1
         return None
     temp_choice = random_choice(items)
     for attribute in attributes:
-        if not general.object_has_attribute(temp_choice, attribute_name=attribute):
+        if not object_has_attribute(temp_choice, attribute_name=attribute):
             return random_with_attributes(items=items, attributes=attributes, attempts=attempts - 1)
     return temp_choice
