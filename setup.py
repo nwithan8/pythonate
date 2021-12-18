@@ -1,5 +1,7 @@
+import os
+
 import setuptools
-import pythonate._version
+import pythonate._info
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -9,23 +11,23 @@ with open("requirements.txt", 'r') as fh:
 
 setuptools.setup(
     # How you named your package folder (MyLib)
-    name='pythonate',
+    name=pythonate._info.__package__,
     # Chose the same as "name"
     packages=setuptools.find_packages(),
     # Start with a small number and increase it with every change you make
-    version=pythonate._version.__version__,
+    version=os.environ["TAG"],
     license='GNU General Public License v3 (GPLv3)',
     # Give a short description about your library
     description="General purpose helper functions and classes for Python3 projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
     # Type in your name
-    author=pythonate._version.__author__,
+    author=pythonate._info.__author__,
     # Type in your E-Mail
-    author_email='n8gr8gbln@gmail.com',
+    author_email=pythonate._info.__author_email__,
     # Provide either the link to your github or to your website
-    url=f'https://github.com/nwithan8/{pythonate.__package__}',
-    download_url=f'https://github.com/nwithan8/{pythonate.__package__}/archive/{pythonate._version.__version__}.tar.gz',
+    url=f'https://github.com/{os.environ["GITHUB_REPO"]}',
+    download_url=f'https://github.com/{os.environ["GITHUB_REPO"]}/archive/refs/tags/{os.environ["TAG"]}.tar.gz',
     # Keywords that define your package best
     keywords=[
         'Python',
