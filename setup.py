@@ -1,7 +1,7 @@
 import os
 
 import setuptools
-import pythonate._info
+import pythonate._info as info
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -10,31 +10,22 @@ with open("requirements.txt", 'r') as fh:
     requirements = fh.read().splitlines()
 
 setuptools.setup(
-    # How you named your package folder (MyLib)
-    name=pythonate._info.__package__,
-    # Chose the same as "name"
+    name=info.__package__,
     packages=setuptools.find_packages(),
-    # Start with a small number and increase it with every change you make
-    version=os.environ["TAG"],
+    version=info.__version__,
     license='GNU General Public License v3 (GPLv3)',
-    # Give a short description about your library
     description="General purpose helper functions and classes for Python3 projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    # Type in your name
-    author=pythonate._info.__author__,
-    # Type in your E-Mail
-    author_email=pythonate._info.__author_email__,
-    # Provide either the link to your github or to your website
+    author=info.__author__,
+    author_email=info.__author_email__,
     url=f'https://github.com/{os.environ["GITHUB_REPO"]}',
     download_url=f'https://github.com/{os.environ["GITHUB_REPO"]}/archive/refs/tags/{os.environ["TAG"]}.tar.gz',
-    # Keywords that define your package best
     keywords=[
         'Python',
         'Python3',
         'requests',
         'SQL',
-        'Dropbox',
         'helper',
         'Google Analytics',
         'sorting',
