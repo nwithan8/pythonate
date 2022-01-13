@@ -1,8 +1,7 @@
-requests~=2.26.0
+requests==2.27.1
 cryptography~=36.0.1
 sqlitedict~=1.7.0
 pyodbc~=4.0.32
 mysql-connector-python~=8.0.27
-objectrest~=0.3.1
-pythonate~=0.0.2
+objectrest==0.4.0
 gnupg~=2.3.1

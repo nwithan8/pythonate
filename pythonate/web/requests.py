@@ -1,7 +1,8 @@
 from typing import Union
 
 import requests
-from objectrest.request_handler import get, post, put, patch, delete, get_json, post_json, put_json, patch_json, delete_json, get_object, post_object, put_object, patch_object, delete_object
+from objectrest.request_handler import get, post, put, patch, delete, options, head, get_json, post_json, put_json, \
+    patch_json, delete_json, get_object, post_object, put_object, patch_object, delete_object, get_proxy_dict
 
 import pythonate.logs as logs
 
