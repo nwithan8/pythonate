@@ -3,6 +3,7 @@ import json
 import os
 import zlib
 from enum import Enum
+from typing import Union, Any
 
 import requests
 from cryptography.hazmat.backends import default_backend
@@ -14,6 +15,9 @@ import pythonate.logs as logs
 
 
 class PrivatebinExpiration(Enum):
+    """
+    Enum for the expiration time of the paste.
+    """
     FIVE_MINUTES = "5min",
     TEN_MINUTES = "10min",
     ONE_HOUR = "1hour",
@@ -66,7 +70,7 @@ def _privatebin_encrypt(paste_passphrase,
                         paste_attachment,
                         paste_compress,
                         paste_burn,
-                        paste_opendicussion):
+                        paste_opendicussion) -> tuple[list[Union[Union[list[Union[str, int]], int], Any]], str]:
     if paste_password:
         paste_passphrase += bytes(paste_password, 'utf-8')
 
@@ -147,7 +151,7 @@ def _privatebin_send(paste_url,
                      paste_compress,
                      paste_burn,
                      paste_opendiscussion,
-                     paste_expire: PrivatebinExpiration):
+                     paste_expire: PrivatebinExpiration) -> Union[tuple[bool, str], tuple[dict[str, str], None]]:
     paste_passphrase = bytes(os.urandom(32))
     # paste_passphrase = get_random_bytes(32)
 
@@ -202,7 +206,22 @@ def privatebin(text,
                url: str = 'https://privatebin.net',
                pass_protect=False,
                expiration: PrivatebinExpiration = PrivatebinExpiration.NEVER,
-               burn_after_reading=False):
+               burn_after_reading=False) -> Union[tuple[bool, str], tuple[dict[str, str], None]]:
+    """
+    Send text to a privatebin server (default: https://privatebin.net)
+    :param text: text to send
+    :type text: str
+    :param url: url to send to
+    :type url: str
+    :param pass_protect: if True, password protected
+    :type pass_protect: bool
+    :param expiration: expiration time
+    :type expiration: PrivatebinExpiration
+    :param burn_after_reading: if True, paste will be deleted after reading
+    :type burn_after_reading: bool
+    :return: tuple of (success, message)
+    :rtype: tuple[bool, str]
+    """
     paste_url = url
     paste_formatter = 'plaintext'
     paste_compress = True
@@ -234,7 +253,16 @@ def privatebin(text,
 
 
 def hastebin(text,
-             url: str = 'https://hastebin.com'):
+             url: str = 'https://hastebin.com') -> Union[dict[str, str], None]:
+    """
+    Send text to a hastebin server (default: https://hastebin.com)
+    :param text: text to send
+    :type text: str
+    :param url: url to send to
+    :type url: str
+    :return: dict of {'url': paste_url, 'delete': paste_delete_url}
+    :rtype: dict[str, str]
+    """
     try:
         post = requests.post(f'{url}/documents', data=text.encode('utf-8'))
         data = {'url': f'{url}/{post.json()["key"]}'}

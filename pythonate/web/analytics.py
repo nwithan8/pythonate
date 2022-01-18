@@ -15,12 +15,20 @@ class GoogleAnalytics:
                  analytics_id: str,
                  anonymous_ip: bool = False,
                  do_not_track: bool = False):
+        """
+        :param analytics_id: Your Google Analytics ID
+        :type analytics_id: str
+        :param anonymous_ip: If True, the IP address will be anonymized
+        :type anonymous_ip: bool
+        :param do_not_track: If True, the user will not be tracked
+        :type do_not_track: bool
+        """
         self.analytics_id = analytics_id
         self.version = '1'
         self.anonymize_ip = anonymous_ip
         self.do_not_track = do_not_track
 
-    def _send(self, final_params):
+    def _send(self, final_params) -> bool:
         if self.do_not_track:
             return True
         url = _make_google_analytics_url(params_dict=final_params)
@@ -35,7 +43,26 @@ class GoogleAnalytics:
               event_value: int = None,
               user_id: str = None,
               anonymize_ip: bool = False,
-              random_uuid_if_needed: bool = False):
+              random_uuid_if_needed: bool = False) -> bool:
+        """
+        Log an event to Google Analytics
+        :param event_category: The category of the event
+        :type event_category: str
+        :param event_action: The action of the event
+        :type event_action: str
+        :param event_label: The label of the event
+        :type event_label: str
+        :param event_value: The value of the event
+        :type event_value: int
+        :param user_id: The user ID of the event
+        :type user_id: str
+        :param anonymize_ip: If True, the IP address will be anonymized
+        :type anonymize_ip: bool
+        :param random_uuid_if_needed: If True, the user ID will be generated
+        :type random_uuid_if_needed: bool
+        :return: True if the event was sent successfully, False otherwise
+        :rtype: bool
+        """
         if self.do_not_track:
             return True
         if not user_id:
@@ -56,7 +83,22 @@ class GoogleAnalytics:
                   page_title: str = None,
                   user_id: str = None,
                   anonymize_ip: bool = False,
-                  random_uuid_if_needed: bool = False):
+                  random_uuid_if_needed: bool = False) -> bool:
+        """
+        Log a page view to Google Analytics
+        :param visited_page: The URL of the page
+        :type visited_page: str
+        :param page_title: The title of the page
+        :type page_title: str
+        :param user_id: The user ID of the page view
+        :type user_id: str
+        :param anonymize_ip: If True, the IP address will be anonymized
+        :type anonymize_ip: bool
+        :param random_uuid_if_needed: If True, the user ID will be generated
+        :type random_uuid_if_needed: bool
+        :return: True if the page view was sent successfully, False otherwise
+        :rtype: bool
+        """
         if self.do_not_track:
             return True
         if not user_id:

@@ -1,12 +1,17 @@
 from enum import Enum
 
 import sqlite3
+from typing import Union, Optional
+
 import mysql.connector
 
 from pythonate.system import os
 
 
 class SQLType(Enum):
+    """
+    SQL Type Enum
+    """
     SQLITE = 1,
     MYSQL = 2,
     MS_SQL = 3
@@ -22,6 +27,25 @@ class SQL:
                  use_active_directory: bool = False,
                  sqlite_file: str = None,
                  encryption_key: str = None):
+        """
+        Initialize the SQL class.
+        :param sql_type: SQL type.
+        :type sql_type: SQLType
+        :param server_ip: Server IP address (needed if using MYSQL or MS_SQL).
+        :type server_ip: str, optional
+        :param database_name: Database name (needed if using MYSQL or MS_SQL).
+        :type database_name: str, optional
+        :param username: Username (needed if using MYSQL or MS_SQL and not using Active Directory).
+        :type username: str, optional
+        :param password: Password (needed if using MYSQL or MS_SQL and not using Active Directory).
+        :type password: str, optional
+        :param use_active_directory: Use Active Directory (needed if using MYSQL or MS_SQL and not using username/password).
+        :type use_active_directory: bool, optional
+        :param sqlite_file: SQLite file (needed if using SQLITE).
+        :type sqlite_file: str, optional
+        :param encryption_key: Encryption key (needed if using SQL_CIPHER).
+        :type encryption_key: str, optional
+        """
         self.SQL_TYPE = sql_type
         self.SERVER_IP = server_ip
         self.DATABASE_NAME = database_name
@@ -70,13 +94,19 @@ class SQL:
     def use_sql_locally(self):
         """
         Pass SQL instance over.
-        :return:
+        :return: SQL connection
         """
         return self._get_connection()
 
     def custom_query(self,
                      queries: [],
-                     commit: bool = False):
+                     commit: bool = False) -> Union[list, None, list[Optional[dict]], list[Optional[tuple]], list[None]]:
+        """
+        Execute a custom query.
+        :param queries: List of queries to execute.
+        :param commit: Commit the query.
+        :return: Result of the query.
+        """
         conn = self._get_connection()
         if conn:
             cur = conn.cursor()

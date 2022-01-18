@@ -39,7 +39,11 @@ def log(message: str, level: LogLevel = LogLevel.INFO) -> None:
     """
     Log a message if verbose is enabled.
     :param message: Message to log
+    :type message: str
     :param level: debug, info, warning, error or critical
+    :type level: LogLevel
+    :return: None
+    :rtype: None
     """
     if need_to_config_logs:
         init_logging()
@@ -52,8 +56,13 @@ def init_logging(message_format: str = '%(asctime)s %(levelname)s:%(message)s',
     """
     Initialize logging.
     :param message_format: Format of log entries
+    :type message_format: str
     :param verbose: Should INFO statements be logged? (Default: False)
+    :type verbose: bool
     :param re_init: Reconfigure logging with new message_format and verbose settings (Default: False)
+    :type re_init: bool
+    :return: None
+    :rtype: None
     """
     global need_to_config_logs
     if need_to_config_logs or re_init:

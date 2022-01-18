@@ -4,11 +4,13 @@ from typing import List, Union
 from pythonate.checks import object_has_attribute
 
 
-def random_choice(items: List):
+def random_choice(items: List) -> object:
     """
     Get a random item from a list
     :param items: list of items
+    :type items: List
     :return: random item
+    :rtype: object
     """
     return random.choice(items)
 
@@ -18,9 +20,13 @@ def random_with_attributes(items: List, attributes: List[str], attempts: int = 1
     Pick a random object with given attribute from a list
     Returns None after X failed attempts
     :param items: List of objects
+    :type items: List
     :param attributes: List of attributes to check for
+    :type attributes: List[str]
     :param attempts: How many times to retry before returning None
+    :type attempts: int
     :return: Either a matching random object or None
+    :rtype: Union[object, None]
     """
     if attempts == 0:
         return None

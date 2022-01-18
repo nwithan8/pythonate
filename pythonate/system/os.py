@@ -3,6 +3,9 @@ from enum import Enum
 
 
 class OS(Enum):
+    """
+    Enum of the different operating systems.
+    """
     LINUX = 'Linux'
     WINDOWS = 'Windows'
     MAC = 'Darwin'
@@ -20,6 +23,11 @@ class OS(Enum):
 
 
 def get_os() -> OS:
+    """
+    Returns the current operating system.
+    :return: The current operating system.
+    :rtype: OS
+    """
     name = platform.system()
     if name == 'Linux':
         return OS.LINUX
@@ -52,8 +60,18 @@ def get_os() -> OS:
 
 
 def get_os_release() -> str:
+    """
+    Returns the current operating system release.
+    :return: The release of the current operating system.
+    :rtype: str
+    """
     return platform.release()
 
 
 def get_os_version() -> str:
+    """
+    Returns the current operating system version.
+    :return: The version of the current operating system.
+    :rtype: str
+    """
     return platform.version()
