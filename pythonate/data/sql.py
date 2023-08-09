@@ -106,8 +106,7 @@ class SQL:
 
     def custom_query(self,
                      queries: [],
-                     commit: bool = False) \
-            -> Union[list, None, list[Optional[dict]], list[Optional[tuple]], list[None]]:
+                     commit: bool = False) -> Union[list, None, list[Optional[dict]], list[Optional[tuple]], list[None]]:
         """
         Execute a custom query.
         :param queries: List of queries to execute.
