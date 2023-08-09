@@ -1,7 +1,21 @@
+import json
 import os
+from typing import List
 
 import setuptools
-import pythonate._info as info
+
+__version__ = 'VERSIONADDEDBYGITHUB'
+
+__title__ = "pythonate"
+__author__ = 'Nate Harris'
+__author_email__ = 'n8gr8gbln@gmail.com'
+__github_username__ = "nwithan8"
+__github_repo__ = "pythonate"
+__copyright__ = "Copyright © YEARADDEDBYGITHUB - Nate Harris"
+__license__ = 'GNU General Public License v3 (GPLv3)'
+__description__ = "General purpose helper functions and classes for Python3 projects"
+__keywords__ = ['Python', 'Python3', 'requests', 'SQL', 'helper', 'Google Analytics', 'sorting', 'unit conversion',
+                'imperial', 'metric', 'storage', 'temperature', 'enum', 'random', 'uuid']
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -16,53 +30,60 @@ extra_requires = {
     ],
 
 }
+
+
+def __supported_python_versions__() -> List[str]:
+    """Return a list of supported Python versions."""
+    with open(os.path.join(os.path.dirname(__file__), __title__, "PYTHON_VERSIONS.json")) as f:
+        versions = f.read()
+        return json.loads(versions)
+
+
+def python_versions() -> List[str]:
+    """Return a list of supported Python versions."""
+    versions = __supported_python_versions__()
+    version_strings = ['Programming Language :: Python :: 3']
+    for version in versions:
+        version_strings.append(f"Programming Language :: Python :: {version}")
+    return version_strings
+
+
+def python3_range() -> str:
+    """Return a string of the supported Python version range."""
+    versions = __supported_python_versions__()
+    return f">={versions[0]}, <4"
+
+
+classifiers = [
+    'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+    'Development Status :: 4 - Beta',
+    # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
+    'Intended Audience :: Developers',  # Define that your audience are developers
+    'Topic :: Software Development :: Build Tools',
+    'Topic :: Multimedia :: Video',
+    'Topic :: Multimedia',
+    'Topic :: Internet :: WWW/HTTP',
+    'Operating System :: OS Independent'
+]
+classifiers.extend(python_versions())
+
 setuptools.setup(
-    name=info.__package__,
-    packages=setuptools.find_packages(),
-    version=info.__version__,
-    license='GNU General Public License v3 (GPLv3)',
-    description="General purpose helper functions and classes for Python3 projects",
+    name=__title__,
+    packages=setuptools.find_packages(exclude=["tests"]),
+    include_package_data=True,
+    version=__version__,
+    license=__license__,
+    description=__description__,
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author=info.__author__,
-    author_email=info.__author_email__,
-    url=f'https://github.com/{os.environ["GITHUB_REPO"]}',
-    download_url=f'https://github.com/{os.environ["GITHUB_REPO"]}/archive/refs/tags/{os.environ["TAG"]}.tar.gz',
-    keywords=[
-        'Python',
-        'Python3',
-        'requests',
-        'SQL',
-        'helper',
-        'Google Analytics',
-        'sorting',
-        'unit conversion',
-        'imperial',
-        'metric',
-        'storage',
-        'temperature',
-        'enum',
-        'random',
-        'uuid'
-    ],
+    author=__author__,
+    author_email=__author_email__,
+    url=f'https://github.com/{__github_username__}/{__github_repo__}',
+    download_url=f'https://github.com/{__github_username__}/{__github_repo__}/archive/refs/tags/{__version__}.tar.gz',
+    keywords=__keywords__,
     install_requires=requirements,
     extras_require=extra_requires,
-    classifiers=[
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-        # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
-        'Development Status :: 3 - Alpha',
-        # Define that your audience are developers
-        'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
-        # Specify which python versions that you want to support
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-        'Topic :: Multimedia :: Video',
-        'Topic :: Multimedia',
-        'Topic :: Internet :: WWW/HTTP',
-        'Operating System :: OS Independent'
-    ],
-    python_requires='>=3.7'
+    test_suite="test",
+    classifiers=classifiers,
+    python_requires=python3_range(),
 )
