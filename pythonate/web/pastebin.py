@@ -3,7 +3,7 @@ import json
 import os
 import zlib
 from enum import Enum
-from typing import Union, Any
+from typing import Union, Any, List
 
 import requests
 from cryptography.hazmat.backends import default_backend
@@ -70,7 +70,7 @@ def _privatebin_encrypt(paste_passphrase,
                         paste_attachment,
                         paste_compress,
                         paste_burn,
-                        paste_opendicussion) -> tuple[list[Union[Union[list[Union[str, int]], int], Any]], str]:
+                        paste_opendicussion) -> tuple[List[Union[Union[List[Union[str, int]], int], Any]], str]:
     if paste_password:
         paste_passphrase += bytes(paste_password, 'utf-8')
 

@@ -1,4 +1,4 @@
-from typing import Any, Union
+from typing import Any, Union, List
 
 
 class Option:
@@ -6,14 +6,14 @@ class Option:
     An option is a name-value pair with a list of aliases.
     """
 
-    def __init__(self, name: str, value: Any, aliases: list[str] = None):
+    def __init__(self, name: str, value: Any, aliases: List[str] = None):
         """
         :param name: The name of the option.
         :type name: str
         :param value: The value of the option.
         :type value: Any
         :param aliases: A list of aliases for the option.
-        :type aliases: list[str]
+        :type aliases: List[str]
         """
         self.name = name
         self.value = value
@@ -25,10 +25,10 @@ class Options:
     A collection of options.
     """
 
-    def __init__(self, options: list[Option]):
+    def __init__(self, options: List[Option]):
         """
         :param options: A list of options.
-        :type options: list[Option]
+        :type options: List[Option]
         """
         self.options = options
 

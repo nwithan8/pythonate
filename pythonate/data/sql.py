@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Union, Optional
+from typing import Union, Optional, List
 
 from pythonate.internal import MissingSupportError
 from pythonate.system import os
@@ -106,7 +106,7 @@ class SQL:
 
     def custom_query(self,
                      queries: [],
-                     commit: bool = False) -> Union[list, None, list[Optional[dict]], list[Optional[tuple]], list[None]]:
+                     commit: bool = False) -> Union[List, None, List[Optional[dict]], List[Optional[tuple]], List[None]]:
         """
         Execute a custom query.
         :param queries: List of queries to execute.

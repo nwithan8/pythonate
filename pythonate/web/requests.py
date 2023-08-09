@@ -1,8 +1,6 @@
 from typing import Union
 
-import requests
-from objectrest.request_handler import get, post, put, patch, delete, options, head, get_json, post_json, put_json, \
-    patch_json, delete_json, get_object, post_object, put_object, patch_object, delete_object, get_proxy_dict
+import objectrest
 
 import pythonate.logs as logs
 
@@ -12,7 +10,7 @@ def _log_call(http_type: str, url: str, level: logs.LogLevel = None) -> None:
         logs.log(message=f"{http_type} {url}", level=level)
 
 
-def _log_response(res: requests.Response, default_log_level: logs.LogLevel = None) -> None:
+def _log_response(res: objectrest.Response, default_log_level: logs.LogLevel = None) -> None:
     if not res:
         logs.log(message=f"Response: {res}", level=logs.LogLevel.ERROR)
     else:
@@ -23,7 +21,7 @@ def get_and_log(url: str,
                 params: dict = None,
                 headers: dict = None,
                 timeout: int = 2,
-                log_level: logs.LogLevel = None) -> Union[requests.Response, None]:
+                log_level: logs.LogLevel = None) -> Union[objectrest.Response, None]:
     """
     Make a GET request to the given URL and log the request and response.
     :param url: The URL to make the request to.
@@ -37,14 +35,14 @@ def get_and_log(url: str,
     :param log_level: The log level to use for logging.
     :type log_level: LogLevel
     :return: The response from the request.
-    :rtype: Union[requests.Response, None]
+    :rtype: Union[objectrest.Response, None]
     """
     try:
-        res = get(url=url, params=params, headers=headers, timeout=timeout)
+        res = objectrest.get(url=url, params=params, headers=headers, timeout=timeout)
         _log_call("GET", url, log_level)
         _log_response(res, log_level)
         return res
-    except requests.exceptions.Timeout:
+    except objectrest.exceptions.Timeout:
         return None
 
 
@@ -53,7 +51,7 @@ def post_and_log(url: str,
                  headers: dict = None,
                  data: dict = None,
                  timeout: int = 2,
-                 log_level: logs.LogLevel = None) -> Union[requests.Response, None]:
+                 log_level: logs.LogLevel = None) -> Union[objectrest.Response, None]:
     """
     Make a POST request to the given URL and log the request and response.
     :param url: The URL to make the request to.
@@ -62,13 +60,15 @@ def post_and_log(url: str,
     :param data: The data to send with the request.
     :param timeout: The timeout to use for the request.
     :param log_level: The log level to use for logging.
+    :return: The response from the request.
+    :rtype: Union[objectrest.Response, None]
     """
     try:
-        res = post(url=url, params=params, headers=headers, data=data, timeout=timeout)
+        res = objectrest.post(url=url, params=params, headers=headers, data=data, timeout=timeout)
         _log_call("POST", url, log_level)
         _log_response(res, log_level)
         return res
-    except requests.exceptions.Timeout:
+    except objectrest.exceptions.Timeout:
         return None
 
 
@@ -77,7 +77,7 @@ def put_and_log(url: str,
                 headers: dict = None,
                 data: dict = None,
                 timeout: int = 2,
-                log_level: logs.LogLevel = None) -> Union[requests.Response, None]:
+                log_level: logs.LogLevel = None) -> Union[objectrest.Response, None]:
     """
     Make a PUT request to the given URL and log the request and response.
     :param url: The URL to make the request to.
@@ -93,14 +93,14 @@ def put_and_log(url: str,
     :param log_level: The log level to use for logging.
     :type log_level: LogLevel
     :return: The response from the request.
-    :rtype: Union[requests.Response, None]
+    :rtype: Union[objectrest.Response, None]
     """
     try:
-        res = put(url=url, params=params, headers=headers, data=data, timeout=timeout)
+        res = objectrest.put(url=url, params=params, headers=headers, data=data, timeout=timeout)
         _log_call("PUT", url, log_level)
         _log_response(res, log_level)
         return res
-    except requests.exceptions.Timeout:
+    except objectrest.exceptions.Timeout:
         return None
 
 
@@ -109,7 +109,7 @@ def patch_and_log(url: str,
                   headers: dict = None,
                   data: dict = None,
                   timeout: int = 2,
-                  log_level: logs.LogLevel = None) -> Union[requests.Response, None]:
+                  log_level: logs.LogLevel = None) -> Union[objectrest.Response, None]:
     """
     Make a PATCH request to the given URL and log the request and response.
     :param url: The URL to make the request to.
@@ -125,14 +125,14 @@ def patch_and_log(url: str,
     :param log_level: The log level to use for logging.
     :type log_level: logs.LogLevel
     :return: The response from the request.
-    :rtype: Union[requests.Response, None]
+    :rtype: Union[objectrest.Response, None]
     """
     try:
-        res = patch(url=url, params=params, headers=headers, data=data, timeout=timeout)
+        res = objectrest.patch(url=url, params=params, headers=headers, data=data, timeout=timeout)
         _log_call("PATCH", url, log_level)
         _log_response(res, log_level)
         return res
-    except requests.exceptions.Timeout:
+    except objectrest.exceptions.Timeout:
         return None
 
 
@@ -141,7 +141,7 @@ def delete_and_log(url: str,
                    headers: dict = None,
                    data: dict = None,
                    timeout: int = 2,
-                   log_level: logs.LogLevel = None) -> Union[requests.Response, None]:
+                   log_level: logs.LogLevel = None) -> Union[objectrest.Response, None]:
     """
     Make a DELETE request to the given URL and log the request and response.
     :param url: The URL to make the request to.
@@ -157,12 +157,12 @@ def delete_and_log(url: str,
     :param log_level: The log level to use for logging.
     :type log_level: logs.LogLevel
     :return: The response from the request.
-    :rtype: Union[requests.Response, None]
+    :rtype: Union[objectrest.Response, None]
     """
     try:
-        res = delete(url=url, params=params, headers=headers, data=data, timeout=timeout)
+        res = objectrest.delete(url=url, params=params, headers=headers, data=data, timeout=timeout)
         _log_call("DELETE", url, log_level)
         _log_response(res, log_level)
         return res
-    except requests.exceptions.Timeout:
+    except objectrest.exceptions.Timeout:
         return None
