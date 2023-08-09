@@ -9,6 +9,13 @@ with open("README.md", "r") as fh:
 with open("requirements.txt", 'r') as fh:
     requirements = fh.read().splitlines()
 
+extra_requires = {
+    'db': [
+        'pymssql~=2.2.8',
+        'mysql-connector-python~=8.1.0',
+    ],
+
+}
 setuptools.setup(
     name=info.__package__,
     packages=setuptools.find_packages(),
@@ -39,6 +46,7 @@ setuptools.setup(
         'uuid'
     ],
     install_requires=requirements,
+    extras_require=extra_requires,
     classifiers=[
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package

@@ -1,11 +1,18 @@
 from enum import Enum
-
-import sqlite3
 from typing import Union, Optional
 
-import mysql.connector
-
+from pythonate.internal import MissingSupportError
 from pythonate.system import os
+
+has_db_support: bool = False
+try:
+    import sqlite3  # type: ignore
+    import mysql.connector  # type: ignore
+    import pymssql  # type: ignore
+
+    has_db_support = True
+except ImportError:
+    has_db_support = False
 
 
 class SQLType(Enum):
@@ -46,6 +53,9 @@ class SQL:
         :param encryption_key: Encryption key (needed if using SQL_CIPHER).
         :type encryption_key: str, optional
         """
+        if not has_db_support:
+            raise MissingSupportError(extension="db")
+
         self.SQL_TYPE = sql_type
         self.SERVER_IP = server_ip
         self.DATABASE_NAME = database_name
@@ -83,12 +93,8 @@ class SQL:
                                          database=self.DATABASE_NAME)
         elif self.SQL_TYPE == SQLType.MS_SQL:
             if os.get_os() == os.OS.WINDOWS:
-                import pyodbc
-                db = pyodbc.connect(f'DRIVER={{/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.5.so.2.1}};'
-                                    f'SERVER={self.SERVER_IP};'
-                                    f'DATABASE={self.DATABASE_NAME};'
-                                    f'UID={self.USERNAME};'
-                                    f'PWD={self.PASSWORD}')
+                db = pymssql.connect(server=self.SERVER_IP, database=self.DATABASE_NAME, user=self.USERNAME,
+                                     password=self.PASSWORD)
         return db
 
     def use_sql_locally(self):
@@ -100,7 +106,8 @@ class SQL:
 
     def custom_query(self,
                      queries: [],
-                     commit: bool = False) -> Union[list, None, list[Optional[dict]], list[Optional[tuple]], list[None]]:
+                     commit: bool = False) \
+            -> Union[list, None, list[Optional[dict]], list[Optional[tuple]], list[None]]:
         """
         Execute a custom query.
         :param queries: List of queries to execute.
