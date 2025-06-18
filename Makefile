@@ -1,7 +1,7 @@
 PYTHON_BINARY := python3
 VIRTUAL_ENV := venv
 VIRTUAL_BIN := $(VIRTUAL_ENV)/bin
-PROJECT_NAME := pythonate
+PROJECT_NAME := python8
 TEST_DIR := tests
 
 ## help - Display help about make targets for this Makefile
