@@ -1,0 +1,106 @@
+[build-system]
+requires = [
+    "setuptools>=61",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python8"
+version = "0.4.0"
+description = "General purpose helper functions and classes for Python3 projects"
+readme = "README.md"
+authors = [
+    { name = "Nate Harris", email = "nwithan8@users.noreply.github.com" }
+]
+license = { text = "GNU General Public License v3 (GPLv3)" }
+requires-python = ">=3.7, <4"
+keywords = [
+    "Python",
+    "Python3",
+    "framework",
+    "rest",
+    "api",
+    "flask",
+    "pydantic",
+    "SQLAlchemy",
+    "requests",
+    "SQL",
+    "helper",
+    "Google Analytics",
+    "sorting",
+    "unit conversion",
+    "imperial",
+    "metric",
+    "storage",
+    "temperature",
+    "enum",
+    "random",
+    "uuid"
+]
+dependencies = [
+    "objectrest~=2.0.0",
+    "cryptography~=41.0.3",
+    "gnupg~=2.3.1",
+    "sqlitedict~=2.1.0",
+    "psutil~=5.9.5"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries"
+]
+
+[project.urls]
+Homepage = "https://github.com/nwithan8/pythonate"
+Download = "https://github.com/nwithan8/pythonate/archive/refs/tags/VERSIONADDEDBYGITHUB.tar.gz"
+
+[project.optional-dependencies]
+config = [
+    "python8[utilities]",
+    "pydantic"
+]
+conversions = [
+
+]
+database = [
+    "sqlalchemy",
+    "sqlalchemy-utils"
+]
+rest_api = [
+    "python8[db]",
+    "pydantic",
+    "flask"
+]
+security = [
+
+]
+system = [
+
+]
+utilities = [
+
+]
+web = [
+
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = [
+    "tests",
+    "examples"
+]
+
+[tool.setuptools]
+include-package-data = true
+
