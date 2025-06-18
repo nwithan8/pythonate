@@ -1,0 +1,1 @@
+from python8.rest_api.controllers.health.index import health as health_blueprint

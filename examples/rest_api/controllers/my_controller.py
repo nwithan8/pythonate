@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 
+from examples.rest_api.constants import SQLITE_FILE
 from examples.rest_api.database.my_database import MyDatabase
 from python8.rest_api.controllers import require_authentication, AuthenticationType
 from python8.rest_api.utils import build_api_response
@@ -10,7 +11,7 @@ from examples.rest_api.repositories.my_repository_model import MyRepositoryModel
 
 my_controller = Blueprint("my_controller", __name__, url_prefix="/controller")
 
-my_database = MyDatabase()
+my_database = MyDatabase(sqlite_file=SQLITE_FILE)
 
 
 @my_controller.route("/example", methods=["GET"])

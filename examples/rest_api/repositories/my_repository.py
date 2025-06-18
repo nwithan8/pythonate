@@ -1,3 +1,4 @@
+from examples.rest_api.constants import SQLITE_FILE
 from examples.rest_api.database.my_database import MyDatabase
 from examples.rest_api.database.my_database_model import MyDatabaseModel
 from examples.rest_api.repositories.my_repository_model import MyRepositoryModel
@@ -10,6 +11,7 @@ class MyRepository(BaseRepository):
 
     def get_data(self, **kwargs):
         # Implement your data retrieval logic here
-        database_model: MyDatabaseModel = MyDatabase().get_data(**kwargs)
+        database = MyDatabase(sqlite_file=SQLITE_FILE)
+        database_model: MyDatabaseModel = database.get_data(**kwargs)
 
         return MyRepositoryModel()
