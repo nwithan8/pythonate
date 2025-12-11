@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python8"
-version = "VERSIONADDEDBYGITHUB"
+version = "0.0.1"
 description = "General purpose helper functions and classes for Python3 projects"
 readme = "README.md"
 authors = [
@@ -37,7 +37,9 @@ keywords = [
     "random",
     "uuid"
 ]
-dependencies = []
+dependencies = [
+    "PyYAML"
+]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -56,7 +58,7 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/nwithan8/pythonate"
-Download = "https://github.com/nwithan8/pythonate/archive/refs/tags/VERSIONADDEDBYGITHUB.tar.gz"
+Download = "https://github.com/nwithan8/pythonate/archive/refs/tags/0.0.1.tar.gz"
 
 [project.optional-dependencies]
 config = [
@@ -66,7 +68,7 @@ conversions = [
 
 ]
 database = [
-    "sqlalchemy",
+    "SQLAlchemy",
     "sqlalchemy-utils",
     "sqlitedict"
 ]
@@ -74,11 +76,10 @@ rest_api = [
     "python8[config]",
     "python8[database]",
     "pydantic",
-    "flask"
+    "Flask"
 ]
 security = [
     "cryptography",
-    "gnupg"
 ]
 system = [
     "psutil"

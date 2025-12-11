@@ -10,7 +10,14 @@ help:
 
 ## build - Builds the project in preparation for release
 build:
-	$(PYTHON_BINARY) setup.py sdist bdist_wheel
+	$(PYTHON_BINARY) -m build --wheel --no-isolation --outdir dist/ .
+
+## build-test - Builds the project for testing the build process
+build-test:
+	# Replace VERSIONADDEDBYGITHUB with 0.0.1
+	gsed -i 's/VERSIONADDEDBYGITHUB/0.0.1/g' pyproject.toml
+	gsed -i 's/VERSIONADDEDBYGITHUB/0.0.1/g' $(PROJECT_NAME)/_version.py
+	make build
 
 ## coverage - Test the project and generate an HTML coverage report
 coverage:

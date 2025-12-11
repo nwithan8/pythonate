@@ -1,7 +1,7 @@
 import pickle
 from typing import Union
 
-from python8.core import save_dict_to_sqlite, load_dict_from_sqlite
+from python8.core.dictionaries import save_dict_to_sqlite, load_dict_from_sqlite
 
 
 def object_to_pickle(obj: object) -> Union[bytes, None]:
