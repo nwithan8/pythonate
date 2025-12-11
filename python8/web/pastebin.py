@@ -11,7 +11,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-import python8.logs as logs
+import python8.core.logs as logs
 
 
 class PrivatebinExpiration(Enum):

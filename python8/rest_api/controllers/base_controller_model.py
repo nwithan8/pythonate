@@ -1,6 +1,5 @@
 from typing import Optional, Dict, Any
 
-from flask import Request as FlaskRequest
 from pydantic import BaseModel
 from werkzeug.datastructures.file_storage import FileStorage
 
@@ -19,7 +18,7 @@ class BaseControllerModel(BaseModel):
         arbitrary_types_allowed = True
 
     @classmethod
-    def from_flask_request(cls, request: FlaskRequest) -> 'IncomingRequest':
+    def from_flask_request(cls, request: 'flask.Request') -> 'IncomingRequest':
         return BaseControllerModel(
             headers=dict(request.headers),
             method=request.method,

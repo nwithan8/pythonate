@@ -1,5 +1,5 @@
 import gnupg
-import python8.files as files
+import python8.core.files as files
 
 
 # GPG Keys #

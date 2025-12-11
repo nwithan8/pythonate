@@ -1,17 +1,11 @@
-from flask import (
-    Request as FlaskRequest,
-    Response as FlaskResponse,
-    jsonify
-)
-
-
-def build_api_response(status_code: int = 200, data: dict = None) -> tuple[FlaskResponse, int]:
+def build_api_response(status_code: int = 200, data: dict = None) -> tuple['flask.Response', int]:
     """
     Build an API response with a status code and optional data.
     :param status_code: Status code to return (200 by default).
     :param data: Data to include in the response (None by default).
     :return: Tuple containing the status code and data.
     """
+    from flask import jsonify
     if data is None:
         data = {}
 

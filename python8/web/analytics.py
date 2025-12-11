@@ -1,6 +1,6 @@
 from urllib.parse import urlencode
 
-import python8.uuid as general
+import python8.core.uuid as general
 import python8.web.requests as requests
 
 

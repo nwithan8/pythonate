@@ -4,7 +4,6 @@ DATABASE_MODULE = "database"
 REST_API_MODULE = "rest_api"
 SECURITY_MODULE = "security"
 SYSTEM_MODULE = "system"
-UTILITIES_MODULE = "utilities"
 WEB_MODULE = "web"
 
 MODULES = [
@@ -14,6 +13,5 @@ MODULES = [
     REST_API_MODULE,
     SECURITY_MODULE,
     SYSTEM_MODULE,
-    UTILITIES_MODULE,
     WEB_MODULE
 ]

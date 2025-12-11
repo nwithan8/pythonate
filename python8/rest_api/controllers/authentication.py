@@ -1,15 +1,9 @@
 import enum
 from functools import wraps
 
-from flask import (
-    request,
-    make_response,
-    jsonify,
-)
-
+from python8.core.crypto import hash_matches, generate_hash, generate_random_alphanumeric_string
 from python8.rest_api.database.base_database import BaseDatabase
 from python8.rest_api.repositories.secrets import SecretRepository
-from python8.utilities.crypto import hash_matches, generate_hash, generate_random_alphanumeric_string
 
 
 class AuthenticationType(enum.Enum):
@@ -67,6 +61,9 @@ def require_authentication(database: BaseDatabase, auth_type: AuthenticationType
             """
             Check authentication (API key in as Bear token in headers)
             """
+            from flask import (
+                request, make_response, jsonify
+            )
             headers: dict = dict(request.headers)
 
             api_key = headers.get("Authorization")

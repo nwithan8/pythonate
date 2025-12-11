@@ -1,7 +1,4 @@
-from flask import (
-    Blueprint,
-    jsonify,
-)
+from flask import Blueprint
 
 from python8.rest_api.constants import (
     FLASK_GET,
@@ -17,6 +14,7 @@ health = Blueprint("health", __name__, url_prefix="/health")
 
 @health.route("/ok", methods=[FLASK_GET])
 def health_ok():
+    from flask import jsonify
     return jsonify({"status": "ok"})
 
 

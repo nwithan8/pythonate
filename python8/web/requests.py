@@ -2,7 +2,7 @@ from typing import Union
 
 import objectrest
 
-import python8.logs as logs
+import python8.core.logs as logs
 
 
 def _log_call(http_type: str, url: str, level: logs.LogLevel = None) -> None:

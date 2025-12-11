@@ -1,23 +1,24 @@
 from examples.rest_api.constants import SQLITE_FILE
+from examples.rest_api.controllers.my_controller import my_controller
 from examples.rest_api.database.my_database import MyDatabase
 from python8.rest_api import (
     FlaskApp
 )
-from python8.rest_api.controllers import (
-    setup_authentication,
-    health_blueprint,
-)
 from python8.rest_api.constants import (
     FLASK_DATABASE_PATH
 )
-
-from examples.rest_api.controllers.my_controller import my_controller
+from python8.rest_api.controllers import (
+    setup_authentication,
+)
+from python8.rest_api.controllers.health import (
+    health_blueprint
+)
 
 # Initialize Flask application
 application = FlaskApp("MY-SERVICE")
 
 # Link the database path to the Flask app config
-application.config[FLASK_DATABASE_PATH] = SQLITE_FILE
+application.edit_config(key=FLASK_DATABASE_PATH, value=SQLITE_FILE)
 
 # Register Flask blueprints
 application.register_blueprint(health_blueprint)

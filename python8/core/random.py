@@ -1,7 +1,7 @@
 import random
 from typing import List, Union
 
-from python8.checks import object_has_attribute
+from python8.core.checks import object_has_attribute
 
 
 def random_choice(items: List) -> object:

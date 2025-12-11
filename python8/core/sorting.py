@@ -2,7 +2,7 @@ import collections
 import random
 from typing import List, Tuple
 
-from python8.checks import object_has_attribute
+from python8.core.checks import object_has_attribute
 
 
 def shuffle(items: List) -> bool:

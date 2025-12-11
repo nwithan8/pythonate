@@ -102,3 +102,41 @@ def copy_file(filename, new_filename) -> None:
     """
     text = read_from_file(filename)
     write_to_file(text=text, filename=new_filename)
+
+
+def save_file(file, folder: str, file_name: str = None) -> str:
+    """
+    Save a file to a specified folder with an optional file name.
+    :param file: The file object to be saved.
+    :param folder: The folder where the file will be saved.
+    :param file_name: The name of the file. If None, a random name will be used.
+    :return: The path to the saved file.
+    """
+    # Ensure the directory exists
+    os.makedirs(folder, exist_ok=True)
+
+    # If no file name is provided, generate a random name
+    file_name = file_name or os.urandom(16).hex()
+
+    # Create the full path for the file
+    file_path = os.path.join(folder, file_name)
+
+    # Save the file
+    with open(file_path, 'wb') as f:
+        f.write(file.read())
+
+    return file_path
+
+
+def delete_file(file_path: str) -> None:
+    """
+    Delete a file if it exists.
+    :param file_path: The path to the file to be deleted.
+    """
+    if os.path.exists(file_path):
+        try:
+            os.remove(file_path)
+        except Exception as e:
+            print(f"Failed to delete file {file_path}: {str(e)}")
+    else:
+        print(f"File {file_path} does not exist, nothing to delete.")

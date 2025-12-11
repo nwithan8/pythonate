@@ -2,7 +2,7 @@ import os
 
 from cryptography.fernet import Fernet
 
-import python8.files as files
+import python8.core.files as files
 
 
 # Encryption (Fernet) #
