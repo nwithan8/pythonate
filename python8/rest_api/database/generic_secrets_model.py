@@ -1,11 +1,15 @@
-from python8.database.base_database_model import BaseDatabaseModel
-import python8.database.imports as sqlalchemy_imports
+from python8.database.base import BaseDatabaseModel
 
 
 class Secret(BaseDatabaseModel):
+    from sqlalchemy import (
+        Column,
+        String,
+    )
+
     __tablename__ = 'secrets'
-    name = sqlalchemy_imports.Column("name", sqlalchemy_imports.String(255), primary_key=True, nullable=False)
-    value = sqlalchemy_imports.Column("value", sqlalchemy_imports.String(255), nullable=False)
+    name = Column("name", String(255), primary_key=True, nullable=False)
+    value = Column("value", String(255), nullable=False)
 
     def __init__(self, name: str, value: str, **kwargs):
         super().__init__(**kwargs)

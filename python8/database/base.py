@@ -1,8 +1,8 @@
 from functools import wraps
 from typing import List
 
-from sqlalchemy import create_engine, MetaData, null
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import null, create_engine, MetaData
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 
 from python8.internal.constants import DATABASE_MODULE
@@ -63,6 +63,15 @@ def false_if_error(func):
             return False
 
     return wrapper
+
+
+class BaseDatabaseModel(DeclarativeBase):
+    """
+    Base class for all database models.
+    Inherits from SQLAlchemy's Base class.
+    """
+
+    __abstract__ = True  # This class should not be instantiated directly
 
 
 class SQLAlchemyDatabase:

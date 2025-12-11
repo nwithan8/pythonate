@@ -1,12 +1,14 @@
+import python8.rest_api.constants as constants
 from python8.rest_api.utils import (
     build_api_response as build_api_response
 )
-import python8.rest_api.constants as constants
+
 
 def _create_flask_app(name: str) -> 'flask.Flask':
     # local import prevents forcing Flask as a core dependency
     from flask import Flask
     return Flask(name)
+
 
 class FlaskApp:
     def __init__(self, name: str):

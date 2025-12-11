@@ -1,10 +1,12 @@
 from typing import List
 
+from sqlalchemy import (
+    Column,
+    Table,
+)
 from sqlalchemy.orm import DeclarativeMeta
 
-from python8.core import convert_string_to_bool
-
-from python8.database.imports import *
+from python8.core.general import convert_string_to_bool
 
 
 def get_table_schema_name(table: DeclarativeMeta) -> str:

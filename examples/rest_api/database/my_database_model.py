@@ -1,10 +1,11 @@
-from python8 import BaseDatabaseModel
-from python8.database import imports
+from python8.database.base import BaseDatabaseModel
 
 
 class MyDatabaseModel(BaseDatabaseModel):
+    from sqlalchemy import Column, Integer
+
     __tablename__ = 'my_database_table'
-    id = imports.Column("id", imports.Integer, primary_key=True, autoincrement=True)
+    id = Column("id", Integer, primary_key=True, autoincrement=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

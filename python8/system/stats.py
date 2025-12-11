@@ -1,7 +1,5 @@
-from enum import Enum
-
-import psutil
 import os
+from enum import Enum
 
 
 class CPUTimeFrame(Enum):
@@ -20,6 +18,7 @@ def cpu_usage(timeframe: CPUTimeFrame = CPUTimeFrame.INSTANT) -> float:
     :return: CPU usage percentage
     :rtype: float
     """
+    import psutil
     match timeframe:
         case CPUTimeFrame.INSTANT:
             return psutil.cpu_percent(interval=1)  # 1 second
@@ -43,6 +42,7 @@ def ram_usage_percentage() -> float:
     :return: RAM usage percentage
     :rtype: float
     """
+    import psutil
     return psutil.virtual_memory()[2]
 
 
@@ -53,4 +53,5 @@ def ram_usage() -> float:
     :return: RAM usage in GB
     :rtype: float
     """
+    import psutil
     return psutil.virtual_memory()[3] / 1000000000

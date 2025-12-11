@@ -5,12 +5,6 @@ import zlib
 from enum import Enum
 from typing import Union, Any, List
 
-import requests
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-
 import python8.core.logs as logs
 
 
@@ -79,6 +73,11 @@ def _privatebin_encrypt(paste_passphrase,
     kdf_salt = bytes(os.urandom(8))
     kdf_iterations = 100000
     kdf_keysize = 256  # size of resulting kdf_key
+
+    from cryptography.hazmat.backends import default_backend
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+    from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
     backend = default_backend()
     kdf = PBKDF2HMAC(algorithm=hashes.SHA256(),
@@ -179,9 +178,11 @@ def _privatebin_send(paste_url,
     # http content type
     headers = {'X-Requested-With': 'JSONHttpRequest'}
 
-    r = requests.post(paste_url,
-                      data=_json_encode(payload),
-                      headers=headers)
+    import objectrest
+
+    r = objectrest.post(paste_url,
+                        data=_json_encode(payload),
+                        headers=headers)
     r.raise_for_status()
 
     try:
@@ -263,8 +264,10 @@ def hastebin(text,
     :return: dict of {'url': paste_url, 'delete': paste_delete_url}
     :rtype: dict[str, str]
     """
+    import objectrest
+
     try:
-        post = requests.post(f'{url}/documents', data=text.encode('utf-8'))
+        post = objectrest.post(f'{url}/documents', data=text.encode('utf-8'))
         data = {'url': f'{url}/{post.json()["key"]}'}
         return data
     except Exception as e:

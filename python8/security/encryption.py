@@ -1,7 +1,5 @@
 import os
 
-from cryptography.fernet import Fernet
-
 import python8.core.files as files
 
 
@@ -16,7 +14,7 @@ def get_raw_fernet_key(key_file) -> str:
     return files.read_from_file(key_file)
 
 
-def get_fernet_key_from_file(key_file) -> 'Fernet':
+def get_fernet_key_from_file(key_file) -> 'cryptography.fernet.Fernet':
     """
     Get Fernet key from file
     WARNING: New key will be made (and potentially overwrite old file) if key cannot be loaded
@@ -24,6 +22,7 @@ def get_fernet_key_from_file(key_file) -> 'Fernet':
     :return: Fernet key
     :rtype: Fernet
     """
+    from cryptography.fernet import Fernet
     try:
         key = files.read_from_file(key_file)
     except:
@@ -38,6 +37,7 @@ def make_fernet_key() -> bytes:
     :return: Fernet key
     :rtype: bytes
     """
+    from cryptography.fernet import Fernet
     return Fernet.generate_key()
 
 
@@ -55,7 +55,7 @@ def save_fernet_key(key: bytes, filename: str) -> None:
 
 
 class Encryption:
-    def __init__(self, key: Fernet = None, key_file: str = None):
+    def __init__(self, key: 'cryptography.fernet.Fernet' = None, key_file: str = None):
         """
         Initialize Encryption class
         :param key: Key to use

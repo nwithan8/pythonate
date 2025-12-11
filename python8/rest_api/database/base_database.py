@@ -1,6 +1,5 @@
+from python8.database.base import SQLAlchemyDatabase
 from python8.rest_api.database.generic_secrets_model import Secret
-
-from python8.database import SQLAlchemyDatabase
 
 
 class BaseDatabase(SQLAlchemyDatabase):
